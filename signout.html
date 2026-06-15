@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover" />
+  <title>Create Account | Stackly Medical Devices</title>
+  <link rel="icon" href="./Assets/icon.webp" />
+  <!-- Common CSS (same as home1/home2/signout) -->
+  <link rel="stylesheet" href="./signout.css" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  
+  <style>
+    /* Additional styles for create account - NO horizontal scroll, fully responsive */
+    * {
+      max-width: 100%;
+    }
+    
+    body {
+      overflow-x: hidden;
+      width: 100%;
+      position: relative;
+    }
+    
+    .the-main {
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    .signup-left ul li {
+      list-style: none;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .signup-left ul li i {
+      color: #2ecc71;
+      font-size: 18px;
+    }
+
+    .terms-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 20px 0;
+      font-size: 14px;
+      text-align: left;
+      flex-wrap: wrap;
+    }
+
+    .terms-group input {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: #2ecc71;
+      flex-shrink: 0;
+    }
+
+    .terms-group label {
+      color: #cbd5e1;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .terms-group a {
+      color: #2ecc71;
+      text-decoration: none;
+    }
+
+    .terms-group a:hover {
+      text-decoration: underline;
+    }
+
+    .signup-btn {
+      width: 100%;
+      margin-top: 10px;
+      padding: 14px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      background: linear-gradient(90deg, #2ecc71, #27ae60);
+      color: #fff;
+      transition: 0.3s;
+      font-family: "Lora", serif;
+      font-size: 16px;
+    }
+
+    .signup-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(46, 204, 113, 0.3);
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+      text-align: left;
+      position: relative;
+    }
+
+    .input-group label {
+      display: block;
+      text-align: left;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #cbd5e1;
+      font-weight: 500;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      outline: none;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .input-group input:focus {
+      border-color: #2ecc71;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .input-group input.error-input {
+      border-color: #ff4757;
+      background: rgba(255, 71, 87, 0.1);
+    }
+
+    .error-msg {
+      color: #ff4757;
+      font-size: 12px;
+      margin-top: 5px;
+      display: block;
+      text-align: left;
+    }
+
+    .password-group {
+      position: relative;
+    }
+
+    .toggle-pwd {
+      position: absolute;
+      right: 15px;
+      top: 70%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 13px;
+      color: #2ecc71;
+      font-weight: 600;
+      background: transparent;
+      z-index: 2;
+    }
+
+    .password-hint {
+      font-size: 12px;
+      text-align: left;
+      margin-top: 5px;
+      color: #94a3b8;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .hint-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+    }
+
+    .hint-item.valid {
+      color: #2ecc71;
+    }
+
+    .hint-item.invalid {
+      color: #94a3b8;
+    }
+
+    .create-account-card {
+      display: flex;
+      background: rgba(46, 204, 113, 0.15);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 0 40px rgba(46, 204, 113, 0.2);
+      border: 1px solid rgba(46, 204, 113, 0.3);
+    }
+
+    /* Responsive adjustments */
+    @media screen and (max-width: 900px) {
+      .create-account-card {
+        flex-direction: column;
+      }
+      .signout-left, .signout-right {
+        padding: 30px 24px !important;
+      }
+    }
+
+    @media screen and (max-width: 600px) {
+      .signout-left h1 {
+        font-size: 24px;
+      }
+      .signout-right h2 {
+        font-size: 22px;
+      }
+      .input-group input {
+        padding: 12px;
+      }
+      .signup-btn {
+        padding: 12px;
+      }
+      .Structure {
+        padding: 30px 15px !important;
+      }
+      .signout-wrapper {
+        width: 100% !important;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .signout-left, .signout-right {
+        padding: 20px 16px !important;
+      }
+      .password-hint {
+        flex-direction: column;
+        gap: 6px;
+      }
+      .terms-group label {
+        font-size: 12px;
+      }
+    }
+
+    /* Fix footer alignment for mobile - left aligned */
+    @media screen and (max-width: 768px) {
+      .main-footer .footer-container {
+        padding: 40px 20px 30px !important;
+        text-align: left !important;
+      }
+      .footer-grid {
+        text-align: left !important;
+      }
+      .footer-brand {
+        align-items: flex-start !important;
+        text-align: left !important;
+      }
+      .footer-social {
+        justify-content: flex-start !important;
+      }
+      .footer-col h4 {
+        text-align: left !important;
+      }
+      .footer-menu {
+        text-align: left !important;
+      }
+      .footer-menu li {
+        text-align: left !important;
+      }
+      .news-input {
+        margin: 0 !important;
+        max-width: 100% !important;
+      }
+      .footer-bottom {
+        text-align: left !important;
+        align-items: flex-start !important;
+      }
+      .footer-legal {
+        justify-content: flex-start !important;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .main-footer .footer-container {
+        padding: 30px 15px 20px !important;
+      }
+    }
+
+    /* Fix for any overflow issues */
+    .signout-wrapper {
+      width: 90%;
+      max-width: 1000px;
+      overflow-x: hidden;
+    }
+    
+    .signout-card, .create-account-card {
+      overflow-x: hidden;
+    }
+    
+    .signout-left ul li {
+      word-break: break-word;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOADER (same as original) -->
+  <div class="medical-loader" id="medicalLoader">
+    <div class="loader-wrapper">
+      <div class="device-container">
+        <div class="device-ring"></div>
+        <div class="device-ring inner"></div>
+        <div class="device-core">
+          <img src="./Assets/icon.webp" alt="Stackly" class="loader-logo" />
+        </div>
+        <div class="scan-line"></div>
+      </div>
+      <div class="ecg-line">
+        <svg viewBox="0 0 500 100" preserveAspectRatio="none">
+          <path d="M0 50 L70 50 L90 20 L110 80 L130 50 L200 50 L220 30 L240 70 L260 50 L500 50" />
+        </svg>
+      </div>
+      <h3 class="loading-text">INITIATING DIAGNOSTIC SCAN...</h3>
+      <p class="sub-text">Establishing Secure Interface with Medical Hub</p>
+    </div>
+  </div>
+
+  <div class="the-main">
+    <!-- HEADER (exactly same as original) -->
+    <header>
+      <div class="header1">
+        <div class="container1">
+          <h3>Welcome To Stackly Medical Devices & Services.</h3>
+        </div>
+        <div class="container2">
+          <div><i class="fa-solid fa-phone-volume"></i><p>(123)456-7890</p></div>
+          <div><i class="fa-regular fa-envelope"></i><p>Support@stackly.com</p></div>
+        </div>
+      </div>
+      <div class="header2">
+        <div class="logo">
+          <a href="./index.html"><img src="./Assets/logo.webp" alt="Logo" /></a>
+        </div>
+        <nav>
+          <ul>
+            <li class="dropdown">
+              <a href="./index.html">Home</a>
+              <span class="drop-toggle"><i class="fa-solid fa-caret-down"></i></span>
+              <ul class="dropdown-menu"><li><a href="./index2.html">Home 2</a></li></ul>
+            </li>
+            <li><a href="./about.html">About</a></li>
+            <li><a href="./service.html">Services</a></li>
+            <li><a href="./blog.html">Blog</a></li>
+            <li><a href="./contact.html">Contact Us</a></li>
+            <li><a href="./dashboard.html">Dashboard</a></li>
+          </ul>
+        </nav>
+        <div class="icons">
+          <div class="login"><a href="./login.html"><i class="fa-regular fa-circle-user"></i></a></div>
+          <div class="mobilebar">
+            <div class="hamburger-box">
+              <div class="hamburger"><div class="line line1"></div><div class="line line2"></div><div class="line line3"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- SIDEBAR (same) -->
+    <div class="sidebar" id="sidebar">
+      <ul>
+        <li class="has-dropdown menu-item" data-aos="fade-up-right" data-aos-delay="100">
+          <div class="dropdown-header"><a href="./index.html">Home</a><span class="drop-caret" id="home-caret">▾</span></div>
+          <ul class="submenu" id="home-dropdown"><li><a href="./index2.html">Home 2</a></li></ul>
+        </li>
+        <li class="menu-item" data-aos="fade-up-right" data-aos-delay="150"><a href="./about.html">About</a></li>
+        <li class="menu-item" data-aos="fade-up-right" data-aos-delay="200"><a href="./service.html">Services</a></li>
+        <li class="menu-item" data-aos="fade-up-right" data-aos-delay="250"><a href="./blog.html">Blog</a></li>
+        <li class="menu-item" data-aos="fade-up-right" data-aos-delay="300"><a href="./contact.html">Contact Us</a></li>
+        <li class="menu-item" data-aos="fade-up-right" data-aos-delay="350"><a href="./dashboard.html">Dashboard</a></li>
+        <li class="menu-item" data-aos="fade-up-right" data-aos-delay="400"><a href="./login.html">Login</a></li>
+      </ul>
+      <div class="sidebar-login" data-aos="fade-up-right" data-aos-delay="450"></div>
+    </div>
+    <div class="overlay" id="overlay"></div>
+    <main></main>
+
+    <!-- CREATE ACCOUNT SECTION with inline validation -->
+    <section class="Structure">
+      <div class="signout-wrapper">
+        <div class="create-account-card">
+          <!-- LEFT INFO -->
+          <div class="signout-left">
+            <h1>Join <span>Stackly Medical Devices</span></h1>
+            <ul>
+              <li><i class="fas fa-check-circle"></i> Access patient insights & analytics</li>
+              <li><i class="fas fa-check-circle"></i> Manage medical devices remotely</li>
+              <li><i class="fas fa-check-circle"></i> 24/7 clinical support & monitoring</li>
+              <li><i class="fas fa-check-circle"></i> Secure & HIPAA-compliant platform</li>
+            </ul>
+            <div class="tip"><i class="fas fa-shield-alt"></i> Free 30-day trial • No credit card required</div>
+          </div>
+
+          <!-- RIGHT FORM with inline error messages -->
+          <div class="signout-right">
+            <h2>Create Account</h2>
+            <p class="headings">Start your medical journey with Stackly.</p>
+
+            <form id="signupForm" novalidate>
+              <!-- Full Name - only letters and spaces allowed -->
+              <div class="input-group" id="nameGroup">
+                <label>Full Name *</label>
+                <input type="text" id="fullName" placeholder="Dr. John Doe" autocomplete="name" />
+                <span class="error-msg" id="nameError"></span>
+              </div>
+
+              <!-- Email -->
+              <div class="input-group" id="emailGroup">
+                <label>Email Address *</label>
+                <input type="email" id="signupEmail" placeholder="doctor@hospital.com" autocomplete="email" />
+                <span class="error-msg" id="emailError"></span>
+              </div>
+
+              <!-- Password with strength hints -->
+              <div class="input-group password-group" id="passwordGroup">
+                <label>Password *</label>
+                <input type="password" id="signupPassword" placeholder="Create a strong password" />
+                <span class="toggle-pwd" id="toggleSignupPassword">Show</span>
+                <div class="password-hint" id="passwordHints">
+                  <span class="hint-item" id="hintUpperLower"><i class="fas fa-circle"></i> Aa</span>
+                  <span class="hint-item" id="hintNumber"><i class="fas fa-circle"></i> 123</span>
+                  <span class="hint-item" id="hintSpecial"><i class="fas fa-circle"></i> !@#$</span>
+                  <span class="hint-item" id="hintLength"><i class="fas fa-circle"></i> 6+ chars</span>
+                </div>
+                <span class="error-msg" id="passwordError"></span>
+              </div>
+
+              <!-- Confirm Password -->
+              <div class="input-group password-group" id="confirmGroup">
+                <label>Confirm Password *</label>
+                <input type="password" id="confirmPassword" placeholder="Confirm your password" />
+                <span class="toggle-pwd" id="toggleConfirmPassword">Show</span>
+                <span class="error-msg" id="confirmError"></span>
+              </div>
+
+              <!-- Terms -->
+              <div class="terms-group">
+                <input type="checkbox" id="termsCheckbox" />
+                <label for="termsCheckbox">I agree to the <a href="./error.html">Terms of Service</a> and <a href="./error.html">Privacy Policy</a> *</label>
+              </div>
+              <span class="error-msg" id="termsError" style="margin-top: -10px; margin-bottom: 5px;"></span>
+
+              <button type="submit" class="signup-btn" id="submitBtn">Create Account →</button>
+              <div class="link">
+                <p class="links">Already have an account? <a href="./login.html">Log In</a></p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER (exact same but with left alignment on mobile) -->
+    <footer class="main-footer">
+      <div class="footer-container">
+        <div class="footer-grid">
+          <div class="footer-col footer-brand">
+            <div class="footer-logo"><a href="./index.html"><img src="./Assets/logo.webp" alt="MEDDEVICE Logo"></a></div>
+            <p class="footer-description">Advancing human health through autonomous precision and clinical intelligence. Our ISO-certified hardware provides the global infrastructure for AI-assisted surgical operations.</p>
+            <div class="footer-social">
+              <a href="./error.html"><i class="fab fa-linkedin-in"></i></a>
+              <a href="./error.html"><i class="fab fa-twitter"></i></a>
+              <a href="./error.html"><i class="fab fa-facebook-f"></i></a>
+              <a href="./error.html"><i class="fab fa-youtube"></i></a>
+              <a href="./error.html"><i class="fab fa-instagram"></i></a>
+            </div>
+          </div>
+          <div class="footer-col"><h4>Quick Links</h4><ul class="footer-menu"><li><a href="./about.html">About</a></li><li><a href="./service.html">Services</a></li><li><a href="./blog.html">Blog</a></li><li><a href="./contact.html">Contact Us</a></li><li><a href="./dashboard.html">Dashboard</a></li><li><a href="./login.html">Login</a></li></ul></div>
+          <div class="footer-col"><h4>Navigation</h4><ul class="footer-menu"><li><a href="./about.html">About</a></li><li><a href="./service.html">Services</a></li><li><a href="./blog.html">Clinical Blog</a></li></ul></div>
+          <div class="footer-col"><h4>Newsletter</h4><p class="newsletter-text">Stay updated on medical breakthroughs.</p><form action="./error.html" class="newsletter-form"><div class="news-input"><input type="email" placeholder="Email Address" required><button type="submit">→</button></div></form></div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2026 Medical Device Innovations. All Rights Reserved.</p><div class="footer-legal"><a href="./error.html">Privacy Policy</a><a href="./error.html">ISO Compliance</a></div></div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script>
+    AOS.init({ once: true, duration: 1000, easing: "ease-out-cubic" });
+    window.addEventListener("load", () => {
+      const loader = document.getElementById("medicalLoader");
+      if(loader) { setTimeout(() => { loader.style.opacity = "0"; loader.style.visibility = "hidden"; }, 1200); }
+    });
+
+    // Header scroll effect
+    window.addEventListener("scroll", () => {
+      const header = document.querySelector(".header2");
+      const mainSection = document.querySelector("main");
+      if(mainSection && mainSection.getBoundingClientRect().bottom <= 0) header?.classList.add("scrolled");
+      else header?.classList.remove("scrolled");
+    });
+
+    // DOM elements
+    const fullNameInput = document.getElementById("fullName");
+    const emailInput = document.getElementById("signupEmail");
+    const passwordInput = document.getElementById("signupPassword");
+    const confirmInput = document.getElementById("confirmPassword");
+    const termsCheck = document.getElementById("termsCheckbox");
+    const submitBtn = document.getElementById("submitBtn");
+
+    // Error spans
+    const nameError = document.getElementById("nameError");
+    const emailError = document.getElementById("emailError");
+    const passwordError = document.getElementById("passwordError");
+    const confirmError = document.getElementById("confirmError");
+    const termsError = document.getElementById("termsError");
+
+    // Password hint elements
+    const hintUpperLower = document.getElementById("hintUpperLower");
+    const hintNumber = document.getElementById("hintNumber");
+    const hintSpecial = document.getElementById("hintSpecial");
+    const hintLength = document.getElementById("hintLength");
+
+    // Toggle password visibility
+    const togglePwd = document.getElementById("toggleSignupPassword");
+    const toggleConfirm = document.getElementById("toggleConfirmPassword");
+
+    togglePwd.addEventListener("click", () => {
+      const type = passwordInput.type === "password" ? "text" : "password";
+      passwordInput.type = type;
+      togglePwd.textContent = type === "password" ? "Show" : "Hide";
+    });
+    toggleConfirm.addEventListener("click", () => {
+      const type = confirmInput.type === "password" ? "text" : "password";
+      confirmInput.type = type;
+      toggleConfirm.textContent = type === "password" ? "Show" : "Hide";
+    });
+
+    // Name validation: only letters and spaces allowed
+    function validateName() {
+      const name = fullNameInput.value.trim();
+      const lettersSpacesOnly = /^[a-zA-Z\s]*$/;
+      
+      if(name === "") { 
+        nameError.textContent = "Full name is required"; 
+        fullNameInput.classList.add("error-input"); 
+        return false; 
+      }
+      if(name.length < 3) { 
+        nameError.textContent = "Name must be at least 3 characters"; 
+        fullNameInput.classList.add("error-input"); 
+        return false; 
+      }
+      if(!lettersSpacesOnly.test(name)) { 
+        nameError.textContent = "Only letters and spaces allowed"; 
+        fullNameInput.classList.add("error-input"); 
+        return false; 
+      }
+      nameError.textContent = ""; 
+      fullNameInput.classList.remove("error-input"); 
+      return true;
+    }
+    
+    // Restrict input to only letters and spaces in real-time
+    fullNameInput.addEventListener("input", (e) => {
+      let value = e.target.value;
+      value = value.replace(/[^a-zA-Z\s]/g, '');
+      e.target.value = value;
+      validateName();
+    });
+
+    function validateEmail() {
+      const email = emailInput.value.trim();
+      const emailPattern = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
+      if(email === "") { emailError.textContent = "Email address is required"; emailInput.classList.add("error-input"); return false; }
+      if(!emailPattern.test(email)) { emailError.textContent = "Enter a valid email (e.g., name@domain.com)"; emailInput.classList.add("error-input"); return false; }
+      emailError.textContent = ""; emailInput.classList.remove("error-input"); return true;
+    }
+
+    function updatePasswordHints() {
+      const pwd = passwordInput.value;
+      const hasUpperLower = /[a-z]/.test(pwd) && /[A-Z]/.test(pwd);
+      const hasNumber = /\d/.test(pwd);
+      const hasSpecial = /[@$!%*?&]/.test(pwd);
+      const hasMinLength = pwd.length >= 6;
+      
+      hintUpperLower.className = `hint-item ${hasUpperLower ? 'valid' : 'invalid'}`;
+      hintUpperLower.innerHTML = hasUpperLower ? '<i class="fas fa-check-circle"></i> Aa' : '<i class="fas fa-circle"></i> Aa';
+      hintNumber.className = `hint-item ${hasNumber ? 'valid' : 'invalid'}`;
+      hintNumber.innerHTML = hasNumber ? '<i class="fas fa-check-circle"></i> 123' : '<i class="fas fa-circle"></i> 123';
+      hintSpecial.className = `hint-item ${hasSpecial ? 'valid' : 'invalid'}`;
+      hintSpecial.innerHTML = hasSpecial ? '<i class="fas fa-check-circle"></i> !@#$' : '<i class="fas fa-circle"></i> !@#$';
+      hintLength.className = `hint-item ${hasMinLength ? 'valid' : 'invalid'}`;
+      hintLength.innerHTML = hasMinLength ? '<i class="fas fa-check-circle"></i> 6+ chars' : '<i class="fas fa-circle"></i> 6+ chars';
+      
+      return { hasUpperLower, hasNumber, hasSpecial, hasMinLength };
+    }
+
+    function validatePassword() {
+      const pwd = passwordInput.value;
+      if(pwd === "") { passwordError.textContent = "Password is required"; passwordInput.classList.add("error-input"); return false; }
+      const { hasUpperLower, hasNumber, hasSpecial, hasMinLength } = updatePasswordHints();
+      if(!hasUpperLower || !hasNumber || !hasSpecial || !hasMinLength) {
+        passwordError.textContent = "Password must meet all requirements above";
+        passwordInput.classList.add("error-input");
+        return false;
+      }
+      passwordError.textContent = ""; passwordInput.classList.remove("error-input"); 
+      return true;
+    }
+
+    function validateConfirm() {
+      const pwd = passwordInput.value;
+      const confirm = confirmInput.value;
+      if(confirm === "") { confirmError.textContent = "Please confirm your password"; confirmInput.classList.add("error-input"); return false; }
+      if(pwd !== confirm) { confirmError.textContent = "Passwords do not match"; confirmInput.classList.add("error-input"); return false; }
+      confirmError.textContent = ""; confirmInput.classList.remove("error-input"); 
+      return true;
+    }
+
+    function validateTerms() {
+      if(!termsCheck.checked) { termsError.textContent = "You must accept Terms & Privacy Policy"; return false; }
+      termsError.textContent = ""; return true;
+    }
+
+    // Real-time validation on input
+    emailInput.addEventListener("input", validateEmail);
+    passwordInput.addEventListener("input", () => { updatePasswordHints(); validatePassword(); if(confirmInput.value) validateConfirm(); });
+    confirmInput.addEventListener("input", validateConfirm);
+    termsCheck.addEventListener("change", validateTerms);
+
+    // Form submit with inline validation (no popup alerts)
+    const form = document.getElementById("signupForm");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      
+      const isNameValid = validateName();
+      const isEmailValid = validateEmail();
+      const isPasswordValid = validatePassword();
+      const isConfirmValid = validateConfirm();
+      const isTermsValid = validateTerms();
+      
+      if(isNameValid && isEmailValid && isPasswordValid && isConfirmValid && isTermsValid) {
+        // All fields valid -> redirect to login.html
+        window.location.href = "./login.html";
+      } else {
+        // Scroll to first error
+        const firstError = document.querySelector(".error-msg:not(:empty)");
+        if(firstError) firstError.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    });
+
+    // Sidebar & dropdown functionality
+    const hamburger = document.querySelector(".hamburger");
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+    const body = document.body;
+    function toggleSidebar() { sidebar.classList.toggle("active"); overlay.classList.toggle("active"); body.classList.toggle("no-scroll"); }
+    if(hamburger) { hamburger.addEventListener("click", (e) => { e.stopPropagation(); hamburger.classList.toggle("active"); toggleSidebar(); }); }
+    if(overlay) { overlay.addEventListener("click", () => { if(sidebar.classList.contains("active")) { hamburger.classList.remove("active"); toggleSidebar(); } }); }
+    const homeCaret = document.getElementById("home-caret");
+    const homeDropdown = document.getElementById("home-dropdown");
+    if(homeCaret && homeDropdown) { homeCaret.addEventListener("click", () => { homeDropdown.classList.toggle("open"); homeCaret.classList.toggle("rotate"); }); }
+    const dropToggle = document.querySelector(".drop-toggle");
+    const dropdown = document.querySelector(".dropdown");
+    if(dropToggle && dropdown) { dropToggle.addEventListener("click", (e) => { e.preventDefault(); dropdown.classList.toggle("active"); }); }
+  </script>
+</body>
+</html>
